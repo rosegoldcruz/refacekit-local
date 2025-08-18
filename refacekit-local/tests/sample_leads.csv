@@ -1,0 +1,6 @@
+first_name,last_name,phone,address,city,state,postal_code,email
+John,Doe,555-123-4567,123 Main St,Anytown,NY,12345,john.doe@example.com
+Jane,Smith,555-987-6543,456 Oak Ave,Springfield,IL,62701,jane.smith@example.com
+Bob,Johnson,555-555-1234,789 Pine Rd,Madison,WI,53703,bob.johnson@example.com
+Alice,Williams,555-111-2222,321 Elm St,Austin,TX,73301,alice.williams@example.com
+Charlie,Brown,555-333-4444,654 Maple Dr,Denver,CO,80202,charlie.brown@example.com

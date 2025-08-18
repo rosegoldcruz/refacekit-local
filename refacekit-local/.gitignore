@@ -1,0 +1,118 @@
+# RefaceKit Local .gitignore
+# Excludes sensitive files, logs, and generated content
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.staging
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Ops stack exports
+ops/exports/*
+!ops/exports/.gitkeep
+
+# Docker
+.dockerignore
+
+# Backup files
+*.backup
+*.bak
+*.tmp
+*~
+*.orig
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Database dumps
+*.sql
+*.db
+*.sqlite
+*.sqlite3
+
+# Certificates and keys
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+
+# Configuration overrides
+config/local/
+local.conf
+*.local.conf
+
+# Test results
+test-results/
+coverage/
+.coverage
+.pytest_cache/
+.tox/
+
+# Archives
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# VICIdial specific
+vicidial_backup_*/
+*.tar.gz

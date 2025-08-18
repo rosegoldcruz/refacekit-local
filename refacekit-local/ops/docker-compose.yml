@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  # FastAPI application for CSV ingestion and API endpoints
+  api:
+    build: 
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: refacekit-api
+    env_file:
+      - ./apps/api/.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    volumes:
+      - ./exports:/data/exports:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - refacekit-network
+
+  # Background worker for CSV processing
+  worker:
+    build:
+      context: ./apps/worker
+      dockerfile: Dockerfile
+    container_name: refacekit-worker
+    env_file:
+      - ./apps/worker/.env
+    depends_on:
+      - redis
+    volumes:
+      - ./exports:/data/exports:rw
+    restart: unless-stopped
+    networks:
+      - refacekit-network
+
+  # Redis for job queue and caching
+  redis:
+    image: redis:7-alpine
+    container_name: refacekit-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    command: redis-server /usr/local/etc/redis/redis.conf
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - refacekit-network
+
+  # Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: refacekit-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - api
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - refacekit-network
+
+volumes:
+  redis_data:
+    driver: local
+
+networks:
+  refacekit-network:
+    driver: bridge
