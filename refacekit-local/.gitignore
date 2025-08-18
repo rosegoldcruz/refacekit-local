@@ -1,6 +1,11 @@
 # RefaceKit Local .gitignore
 # Excludes sensitive files, logs, and generated content
 
+# Documentation with sensitive information
+README.md
+README_*.md
+*.md
+
 # Environment files
 .env
 .env.local
